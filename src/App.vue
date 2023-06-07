@@ -27,13 +27,14 @@ export default {
 
 <template>
   <div class="wrapBox">
+    <div class="borderBox">
     <div class="innerBox">
       <div style="display: flex; width: 100%; justify-content: center; margin-bottom: 2%;">
         <span style="color: white; font-size: 2.5em">퀴즈</span>
       </div>
     <div class="flex">
       <span>퀴즈 종류 : </span>
-    <select v-model="selectData">
+    <select class="selectBox" v-model="selectData">
       <option :value="v.name" v-for="(v,i) in quizData">{{ v.name }}</option>
     </select>
     </div>
@@ -57,18 +58,11 @@ export default {
         <button type="button" class="btn btn-primary" style="font-size: 2.5em">시작!</button>
       </div>
     </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.innerBox{
-  width: 35%;
-  height: 50%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
 .wrapBox{
   background: #24252f;
   width: 100vw;
@@ -76,12 +70,48 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
+
+@keyframes animationGlow {
+  0%{background-position:0 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0 50%}
+}
+.borderBox{
+  width: 50%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform: scale(0.75);
+  border-radius: 10px;
+  background: linear-gradient(270deg, #0fffc1, #7e0fff);
+  background-size: 200% 200%;
+  animation: animationGlow 10s infinite;
+}
+.innerBox{
+  width: 97%;
+  height: 94%;
+  margin: 0 auto;
+  display: flex;
+  border-radius: 10px;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(36,37,47,0.9);
+}
+
 .flex{
   display: flex;
   justify-content: space-between;
   margin-bottom: 1%;
+  padding-left: 5%;
+  padding-right: 5%;
   color: white;
+}
+.selectBox{
+  outline-color: red;
+  border: 1px solid red;
 }
 
 </style>
