@@ -1,6 +1,6 @@
 # quiz
 
-👉https://remarkable-jalebi-bb2c04.netlify.app👈
+👉https://simonquiz.netlify.app/👈
 
 This template should help get you started developing with Vue 3 in Vite.
 
