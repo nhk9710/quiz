@@ -9,18 +9,18 @@ export default {
   setup(){
     const quizData = ref(data.trivia_categories);
     const selectData = ref('');
-    const numberOfQuestion = ref(1);
+    const numberOfQuestion = ref(10);
     const difficulty = ref(['easy','medium','hard']);
     const selectDifficulty = ref('easy');
-    const quizType = ref(['True&False','multiple','any'])
-    const selectType = ref('any');
+    const quizType = ref([{name:'True&False', value: 'boolean'},{name:'multiple', value: 'multiple'},{name:'any',value: ''}])
+    const selectType = ref('');
     const store = quizStore();
     let { count, sDifficulty, sType, qType } = storeToRefs(store);
     const inputData = () => {
-        count.value = numberOfQuestion;
-        sDifficulty.value = selectDifficulty;
-        sType.value = selectData;
-        qType.value = selectType;
+        count.value = numberOfQuestion.value;
+        sDifficulty.value = selectDifficulty.value;
+        sType.value = selectData.value;
+        qType.value = selectType.value;
     }
     const returnHere = () => {
       alert('퀴즈 종류를 선택해주세요!');
@@ -48,28 +48,28 @@ export default {
     <div class="borderBox">
       <div class="innerBox">
         <div style="display: flex; width: 100%; justify-content: center; margin-bottom: 2%;">
-          <span style="color: white; font-size: 2.5em">퀴즈</span>
+          <span style="color: white; font-size: 2.5em; font-weight: bolder">퀴즈</span>
         </div>
         <div class="flex">
           <span>퀴즈 종류 : </span>
           <select class="selectBox" v-model="selectData">
-            <option :value="v.name" v-for="(v,i) in quizData">{{ v.name }}</option>
+            <option :value="v.id" v-for="(v,i) in quizData">{{ v.name }}</option>
           </select>
         </div>
         <div class="flex">
           <span>퀴즈 숫자 : </span>
-          <input type="number" v-model="numberOfQuestion" min="1" max="50">
+          <input class="selectBox" type="number" v-model="numberOfQuestion" min="1" max="50">
         </div>
         <div class="flex">
           <span>퀴즈 난이도 : </span>
-          <select v-model="selectDifficulty">
+          <select class="selectBox" v-model="selectDifficulty">
             <option :value="v" v-for="(v,i) in difficulty">{{ v }}</option>
           </select>
         </div>
         <div class="flex">
           <span>퀴즈 타입 : </span>
-          <select v-model="selectType">
-            <option :value="v" v-for="(v,i) in quizType">{{ v }}</option>
+          <select class="selectBox" v-model="selectType">
+            <option :value="v.value" v-for="(v,i) in quizType">{{ v.name }}</option>
           </select>
         </div>
         <div style="display: flex; width: 100%; justify-content: center; margin-bottom: 2%;">
@@ -125,27 +125,35 @@ export default {
 }
 .innerBox{
   width: 97%;
-  height: 94%;
+  height: 95%;
   margin: 0 auto;
   display: flex;
   border-radius: 10px;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   background-color: rgba(36,37,47,1);
 }
 
 .flex{
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1%;
   padding-left: 5%;
   padding-right: 5%;
   color: white;
+  font-size: 1.7em;
 }
 .selectBox{
-  outline-color: red;
-  border: 1px solid red;
+  box-shadow: 0 0 15px 5px #0fffc1;
+  border-radius: 10px;
+  border: none;
+  transition: 1s;
+  cursor: pointer;
 }
+.selectBox:focus{
+  box-shadow: 0 0 10px 3px #7e0fff;
+}
+
+
 .btn{
   background: none;
   border: none;
