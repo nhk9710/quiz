@@ -8,7 +8,9 @@ export default{
   setup() {
     const store = quizStore();
 
+    //퀴즈 홈에서 받아온 데이터
     const {count, sDifficulty, sType, qType} = storeToRefs(store);
+    //퀴즈 데이터
     const quizArray = ref([]);
 
     //현재 퀴즈 번호
@@ -17,6 +19,18 @@ export default{
     const numberOfQuiz = ref(0);
     //선택지
     const answerArray = ref([]);
+    //정답수
+    const correctAnswer = ref(0);
+    //문제
+    const quizText = ref("");
+    //답안1
+    const quiz1 = ref('');
+    //답안2
+    const quiz2 = ref('');
+    //답안3
+    const quiz3 = ref('');
+    //답안4
+    const quiz4 = ref('');
 
     const incNum = () => {
       if(quizCount.value === count.value){
@@ -42,16 +56,57 @@ export default{
         await axios.get(`https://opentdb.com/api.php?amount=${count.value}&category=${sType.value}&difficulty=${sDifficulty.value}&type=${qType.value}`)
             .then(response => {
               quizArray.value = response.data.results;
-              const index = quizCount;
+              const index = quizCount.value;
 
               answerArray.value.push(quizArray.value[index].correct_answer);
               quizArray.value[index].incorrect_answers.forEach(v => {
                 answerArray.value.push(v);
               })
+              correctAnswer.value = quizArray.value[index].correct_answer;
+              quizText.value = quizArray.value[index].question;
+              quiz1.value = randomAnswerPosition();
+              quiz2.value = randomAnswerPosition();
+              quiz3.value = randomAnswerPosition();
+              quiz4.value = randomAnswerPosition();
             })
       }
-
     })
+    const renderQuiz = () => {
+      const index = quizCount.value;
+
+      answerArray.value.push(quizArray.value[index].correct_answer);
+      quizArray.value[index].incorrect_answers.forEach(v => {
+        answerArray.value.push(v);
+      })
+      correctAnswer.value = quizArray.value[index].correct_answer;
+      quizText.value = quizArray.value[index].question;
+      quiz1.value = randomAnswerPosition();
+      quiz2.value = randomAnswerPosition();
+      quiz3.value = randomAnswerPosition();
+      quiz4.value = randomAnswerPosition();
+    }
+
+    //랜덤위치
+    const randomAnswerPosition = () => {
+      const randomNumber = Math.floor(Math.random() * answerArray.value.length);
+      let answer = answerArray.value.splice(randomNumber, 1)[0];
+
+      return answer;
+    }
+
+    //정답확인
+    const chkAnswer = (event) => {
+      if(correctAnswer.value === event.target.innerText){
+        alert('정답입니다');
+        quizCount.value ++;
+        return renderQuiz();
+      }else{
+        alert('오답입니다');
+        quizCount.value ++;
+        return renderQuiz();
+      }
+    }
+
     return {
       answerArray,
       numberOfQuiz,
@@ -63,6 +118,12 @@ export default{
       store,
       quizArray,
       incNum,
+      quizText,
+      quiz1,
+      quiz2,
+      quiz3,
+      quiz4,
+      chkAnswer
     }
   },
 }
@@ -71,10 +132,13 @@ export default{
 <template>
   <div class="hello">
     <div class="quizBox">
-<!--      <span v-html="quizArray.data.results[quizCount].question"></span>-->
-      <pre>{{ quizArray }}</pre>
-      <div class="btnBox">
-      <button @click="incNum">정답확인</button>
+      <progress class="quizProgress" :value="quizCount+1" min="0" max="10"></progress>
+      <span style="font-weight: bold; margin: 0 auto; font-size: 1.3em" v-html="quizText"></span>
+      <div class="btnLine">
+      <button class="btnStyle" @click="chkAnswer($event)" v-html="quiz1"></button>
+      <button class="btnStyle" @click="chkAnswer($event)" v-html="quiz2"></button>
+      <button class="btnStyle" @click="chkAnswer($event)" v-html="quiz3"></button>
+      <button class="btnStyle" @click="chkAnswer($event)" v-html="quiz4"></button>
       </div>
     </div>
   </div>
@@ -91,17 +155,39 @@ export default{
   align-items: center;
 }
 .quizBox{
-  color: white;
-  border: 1px solid white;
+  color: #24252f;
   border-radius: 10px;
-  width: 40%;
+  width: 35%;
   height: 50%;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+  background: #eff0f4;
 }
-
-.btnBox{
+.quizProgress{
+  appearance: none;
+  margin: 0 auto;
+  width: 90%;
+}
+.quizProgress::-webkit-progress-bar{
+  background: #24252f;
+  border-radius: 10px;
+}
+.quizProgress::-webkit-progress-value{
+  border-radius: 10px;
+  background: #2fe676;
+}
+.btnLine{
   display: flex;
-  justify-content: end;
+  justify-content: space-around;
+}
+.btnStyle{
+  background: #2fe676;
+  font-weight: bolder;
+  border:none;
+  padding: 10px;
+  border-radius: 9px;
+  outline: none;
+  cursor: pointer;
 }
 </style>

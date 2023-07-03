@@ -20,7 +20,7 @@ export default {
         count.value = numberOfQuestion.value;
         sDifficulty.value = selectDifficulty.value;
         sType.value = selectData.value;
-        qType.value = selectType.value;
+        qType.value = 'multiple';
     }
     const returnHere = () => {
       alert('퀴즈 종류를 선택해주세요!');
@@ -65,12 +65,6 @@ export default {
           <span>퀴즈 난이도 : </span>
           <select class="selectBox" v-model="selectDifficulty">
             <option :value="v" v-for="(v,i) in difficulty">{{ v }}</option>
-          </select>
-        </div>
-        <div class="flex">
-          <span>퀴즈 타입 : </span>
-          <select class="selectBox" v-model="selectType">
-            <option :value="v.value" v-for="(v,i) in quizType">{{ v.name }}</option>
           </select>
         </div>
         <div style="display: flex; width: 100%; justify-content: center; margin-bottom: 2%;">
