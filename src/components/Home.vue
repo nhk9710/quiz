@@ -49,7 +49,7 @@ export default {
     <div class="borderBox">
       <div class="innerBox">
         <div style="display: flex; width: 100%; justify-content: center; margin-bottom: 2%;">
-          <span style="color: white; font-size: 2.5em; font-weight: bolder">퀴즈</span>
+          <span style="color: #24252f; font-size: 2.5em; font-weight: bolder">퀴즈</span>
         </div>
         <div class="flex">
           <span>퀴즈 종류 : </span>
@@ -68,20 +68,20 @@ export default {
           </select>
         </div>
         <div style="display: flex; width: 100%; justify-content: center; margin-bottom: 2%;">
-          <button type="button" class="btn" style="font-size: 2.5em">
+          <button type="button" class="btn" style="font-size: 1.5em">
             <template v-if="selectData === ''">
             <router-link to="/"
                          style="text-decoration-line: none;"
                          class="routerLink"
                          @click="returnHere"
-            >시작!</router-link>
+            >Start!</router-link>
             </template>
             <template v-else>
               <router-link to="/question"
                            style="text-decoration-line: none;"
                            class="routerLink"
                            @click="inputData"
-              >시작!</router-link>
+              >Start!</router-link>
             </template>
           </button>
         </div>
@@ -112,11 +112,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transform: scale(0.75);
   border-radius: 10px;
-  background: linear-gradient(270deg, #0fffc1, #7e0fff);
-  background-size: 200% 200%;
-  animation: animationGlow 10s infinite;
 }
 .innerBox{
   width: 97%;
@@ -126,7 +122,7 @@ export default {
   border-radius: 10px;
   flex-direction: column;
   justify-content: space-evenly;
-  background-color: rgba(36,37,47,1);
+  background-color: #eff0f4;
 }
 
 .flex{
@@ -134,18 +130,13 @@ export default {
   justify-content: space-between;
   padding-left: 5%;
   padding-right: 5%;
-  color: white;
+  color: #24252f;
   font-size: 1.7em;
 }
 .selectBox{
-  box-shadow: 0 0 15px 5px #0fffc1;
   border-radius: 10px;
   border: none;
-  transition: 1s;
   cursor: pointer;
-}
-.selectBox:focus{
-  box-shadow: 0 0 10px 3px #7e0fff;
 }
 
 
@@ -153,21 +144,14 @@ export default {
   background: none;
   border: none;
   border-radius: 20px;
-  box-shadow: 0 0 12px 4px #0fffc1;
-  transition: 1.5s;
 
-}
-.btn:hover{
-  color: #7e0fff;
-  box-shadow:  0 0 20px 18px #7e0fff;
 }
 
 .routerLink{
-  color: #0fffc1;
-  transition: 1.5s;
-}
-.routerLink:hover{
-  color: #7e0fff;
+  color: #24252f;
+  padding: 10px;
+  background: #2fe676;
+  border-radius: 10px;
 }
 
 
