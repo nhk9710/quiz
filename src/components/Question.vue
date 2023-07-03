@@ -33,6 +33,8 @@ export default{
     const quiz3 = ref('');
     //답안4
     const quiz4 = ref('');
+    //마지막 문제 풀었을때
+    const lastQuiz = ref(false);
 
     const incNum = () => {
       if(quizCount.value === count.value){
@@ -101,7 +103,8 @@ export default{
     //마지막 문제
     const chkLastQuiz = () => {
       if(quizCount.value + 1 === numberOfQuiz.value){
-        alert('마지막 입니다. 맞춘 수 : ' + correctAnswers.value + '개');
+        // alert('마지막 입니다. 맞춘 수 : ' + correctAnswers.value + '개');
+        lastQuiz.value = true;
       }else{
         return
       }
@@ -137,7 +140,9 @@ export default{
       quiz2,
       quiz3,
       quiz4,
-      chkAnswer
+      chkAnswer,
+      lastQuiz,
+      correctAnswers
     }
   },
 }
@@ -146,6 +151,7 @@ export default{
 <template>
   <div class="hello">
     <div class="quizBox">
+      <template v-if="!lastQuiz">
       <progress class="quizProgress" :value="quizCount+1" min="0" max="10"></progress>
       <span style="font-weight: bold; margin: 0 auto; font-size: 1.3em" v-html="quizText"></span>
       <div class="btnLine">
@@ -154,6 +160,11 @@ export default{
       <button class="btnStyle" @click="chkAnswer($event)" v-html="quiz3"></button>
       <button class="btnStyle" @click="chkAnswer($event)" v-html="quiz4"></button>
       </div>
+      </template>
+      <template v-else>
+        <span class="resultText">당신의 점수는 {{ correctAnswers }}/10점 입니다!</span>
+        <router-link class="resultText" to="/" style="text-decoration-line: none;">재도전</router-link>
+      </template>
     </div>
   </div>
 </template>
@@ -203,5 +214,11 @@ export default{
   border-radius: 9px;
   outline: none;
   cursor: pointer;
+}
+.resultText{
+  margin: 0 auto;
+  font-weight: bold;
+  font-size: 1.5em;
+  color: #24252f;
 }
 </style>
