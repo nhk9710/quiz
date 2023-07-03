@@ -19,8 +19,10 @@ export default{
     const numberOfQuiz = ref(0);
     //선택지
     const answerArray = ref([]);
-    //정답수
+    //정답
     const correctAnswer = ref(0);
+    //맞춘 문제 수
+    const correctAnswers = ref(0);
     //문제
     const quizText = ref("");
     //답안1
@@ -58,6 +60,8 @@ export default{
               quizArray.value = response.data.results;
               const index = quizCount.value;
 
+              numberOfQuiz.value = quizArray.value.length;
+
               answerArray.value.push(quizArray.value[index].correct_answer);
               quizArray.value[index].incorrect_answers.forEach(v => {
                 answerArray.value.push(v);
@@ -94,17 +98,27 @@ export default{
       return answer;
     }
 
+    //마지막 문제
+    const chkLastQuiz = () => {
+      if(quizCount.value + 1 === numberOfQuiz.value){
+        alert('마지막 입니다. 맞춘 수 : ' + correctAnswers.value + '개');
+      }else{
+        return
+      }
+    }
+
     //정답확인
     const chkAnswer = (event) => {
       if(correctAnswer.value === event.target.innerText){
         alert('정답입니다');
-        quizCount.value ++;
-        return renderQuiz();
+        correctAnswers.value ++;
       }else{
         alert('오답입니다');
-        quizCount.value ++;
-        return renderQuiz();
+
       }
+      chkLastQuiz()
+      quizCount.value ++;
+      renderQuiz();
     }
 
     return {
