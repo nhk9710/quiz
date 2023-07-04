@@ -170,6 +170,7 @@ export default{
 </template>
 
 <style scoped>
+
 .hello{
   width: 100vw;
   height: 100vh;
@@ -210,6 +211,7 @@ export default{
   background: #2fe676;
   font-weight: bolder;
   border:none;
+  width: 20%;
   padding: 10px;
   border-radius: 9px;
   outline: none;

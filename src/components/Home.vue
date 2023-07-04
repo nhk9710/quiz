@@ -91,6 +91,8 @@ export default {
 </template>
 
 <style scoped>
+
+
 .wrapBox{
   background: #24252f;
   width: 100vw;
